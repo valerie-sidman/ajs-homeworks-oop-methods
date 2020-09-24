@@ -89,3 +89,40 @@ test('fail type', () => {
   }
   expect(thrownError).toEqual(expextedError);
 });
+
+// Методы
+test('level up', () => {
+  const daemonUp = new Character('ФросяПро', 'Daemon', 10, 40);
+  daemonUp.levelUp();
+  expect(daemonUp.level).toBe(2);
+  expect(daemonUp.attack).toBe(12);
+  expect(daemonUp.defence).toBe(48);
+  expect(daemonUp.health).toBe(100);
+});
+
+test('damage health 100', () => {
+  const damageUndead = new Character('Йорик', 'Undead', 25, 25);
+  damageUndead.damage(3);
+  expect(damageUndead.health).toBe(97.75);
+});
+
+test('damage health -10', () => {
+  const damageUndead = new Character('Йорик', 'Undead', 25, 25);
+  damageUndead.health = -10;
+  damageUndead.damage(3);
+  expect(damageUndead.health).toBe(-10);
+});
+
+test('fail level up', () => {
+  let thrownError;
+  const expextedError = new Error('Нельзя повысить level умершего');
+  try {
+    const failLevelUp = new Character('Айболит', 'Daemon', 10, 40);
+    failLevelUp.health = 0;
+    failLevelUp.levelUp();
+    console.log(failLevelUp);
+  } catch (error) {
+    thrownError = error;
+  }
+  expect(thrownError).toEqual(expextedError);
+});
